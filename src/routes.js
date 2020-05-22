@@ -7,8 +7,8 @@ import Home from "./pages/Home";
 function Routes(props) {
     return (
         <Switch>
-            <Route to="/" exact component={Home}></Route>
-            <Route to="/cart" component={Cart}></Route>
+            <Route path="/" exact component={Home} />
+            <Route path="/cart" component={Cart} />
         </Switch>
     );
 }
