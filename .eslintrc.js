@@ -23,6 +23,7 @@ module.exports = {
   ],
   rules: {
     'import/prefer-default-export': 'off',
+    'no-param-reassign': 'off',
     'jsx-a11y/control-has-associated-label': [2, {
       'labelAttributes': ['label'],
       'controlComponents': ['CustomComponent'],
