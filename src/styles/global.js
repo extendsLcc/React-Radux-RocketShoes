@@ -1,4 +1,4 @@
-import { createGlobalStyle } from "styled-components";
+import { createGlobalStyle } from 'styled-components';
 
 export default createGlobalStyle`
   
@@ -24,7 +24,7 @@ export default createGlobalStyle`
   #root{
     max-width: 1020px;
     margin: 0 auto;
-    padding: 0px 20px 50px;
+    padding: 0 20px 50px;
   }
   
   button{
