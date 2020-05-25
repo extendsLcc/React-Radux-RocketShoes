@@ -17,11 +17,22 @@ export default function cart(state = [], action) {
       });
     case '@cart/REMOVE':
       return produce(state, (productsDraft) => {
-        const productIndex = productsDraft.findIndex((product) => product.id === action.id);
+        const productIndex = productsDraft.findIndex((product) => product.id === action.productId);
         if (productIndex >= 0) {
           productsDraft.splice(productIndex, 1);
         }
       });
+    case '@cart/UPDATE': {
+      if (action.amount <= 0) {
+        return state;
+      }
+      return produce(state, (productsDraft) => {
+        const productIndex = productsDraft.findIndex((product) => product.id === action.productId);
+        if (productIndex >= 0) {
+          productsDraft[productIndex].amount = Number(action.amount);
+        }
+      });
+    }
     default:
       return state;
   }

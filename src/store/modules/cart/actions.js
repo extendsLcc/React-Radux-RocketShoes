@@ -8,6 +8,14 @@ export function addToCart(product) {
 export function removeFromCart(productId) {
   return {
     type: '@cart/REMOVE',
-    id: productId,
+    productId,
+  };
+}
+
+export function updateProductAmountFromCart(id, amount) {
+  return {
+    type: '@cart/UPDATE',
+    productId: id,
+    amount,
   };
 }
