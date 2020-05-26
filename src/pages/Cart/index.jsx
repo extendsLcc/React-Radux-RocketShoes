@@ -5,16 +5,14 @@ import { MdRemoveCircleOutline, MdAddCircleOutline, MdDelete } from 'react-icons
 import { removeFromCart, updateProductAmountFromCart } from '../../store/modules/cart/actions';
 
 import { Container, ProductTable, Total } from './styles';
+import { formatPrice } from '../../util/format';
 
-function Cart({ cart, dispatch }) {
+function Cart({ cart, dispatch, total }) {
   function incrementProductAmount(product) {
-    console.log(product);
-    console.log(product.amount);
     dispatch(updateProductAmountFromCart(product.id, product.amount + 1));
   }
+
   function decrementProductAmount(product) {
-    console.log(product);
-    console.log(product.amount);
     dispatch(updateProductAmountFromCart(product.id, product.amount - 1));
   }
 
@@ -32,7 +30,7 @@ function Cart({ cart, dispatch }) {
         </thead>
         <tbody>
           {cart.map((product) => (
-            <tr>
+            <tr key={product.id}>
               <td>
                 <img src={product.image} alt="Tênis" />
               </td>
@@ -52,7 +50,7 @@ function Cart({ cart, dispatch }) {
                 </div>
               </td>
               <td>
-                <strong>R$129,90</strong>
+                <strong>{product.subTotal}</strong>
               </td>
               <td>
                 <button
@@ -71,7 +69,7 @@ function Cart({ cart, dispatch }) {
         <button type="button">Finalizar Pedido</button>
         <Total>
           <span>TOTAL</span>
-          <strong>R$500,00</strong>
+          <strong>{total}</strong>
         </Total>
       </footer>
     </Container>
@@ -79,7 +77,13 @@ function Cart({ cart, dispatch }) {
 }
 
 const mapStateToProps = (state) => ({
-  cart: state.cart,
+  cart: state.cart.map((product) => ({
+    ...product,
+    subTotal: formatPrice(product.price * product.amount),
+  })),
+  total: formatPrice(
+    state.cart.reduce((total, product) => total + product.price * product.amount, 0),
+  ),
 });
 
 export default connect(mapStateToProps)(Cart);
