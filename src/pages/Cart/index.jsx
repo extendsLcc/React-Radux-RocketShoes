@@ -2,18 +2,18 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { MdRemoveCircleOutline, MdAddCircleOutline, MdDelete } from 'react-icons/md';
 
-import { removeFromCart, updateProductAmountFromCart } from '../../store/modules/cart/actions';
+import { removeFromCart, updateProductAmountFromCartRequest } from '../../store/modules/cart/actions';
 
 import { Container, ProductTable, Total } from './styles';
 import { formatPrice } from '../../util/format';
 
 function Cart({ cart, dispatch, total }) {
   function incrementProductAmount(product) {
-    dispatch(updateProductAmountFromCart(product.id, product.amount + 1));
+    dispatch(updateProductAmountFromCartRequest(product.id, product.amount + 1));
   }
 
   function decrementProductAmount(product) {
-    dispatch(updateProductAmountFromCart(product.id, product.amount - 1));
+    dispatch(updateProductAmountFromCartRequest(product.id, product.amount - 1));
   }
 
   return (

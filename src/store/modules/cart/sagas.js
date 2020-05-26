@@ -4,7 +4,7 @@ import {
 
 import { toast } from 'react-toastify';
 import api from '../../../services/api';
-import { addToCartSuccess, updateProductAmountFromCart } from './actions';
+import { addToCartSuccess, updateProductAmountFromCartSuccess } from './actions';
 import { formatPrice } from '../../../util/format';
 
 function* addToCart({ id }) {
@@ -23,7 +23,7 @@ function* addToCart({ id }) {
   }
 
   if (productExists) {
-    yield put(updateProductAmountFromCart(id, amount));
+    yield put(updateProductAmountFromCartSuccess(id, amount));
   } else {
     const response = yield call(api.get, `/products/${id}`);
 
@@ -37,6 +37,20 @@ function* addToCart({ id }) {
   }
 }
 
+function* updateAmount({ productId, amount }) {
+  if (amount <= 0) {
+    return;
+  }
+  const stock = yield call(api.get, `/stock/${productId}`);
+  const stockAmount = stock.data.amount;
+  if (amount > stockAmount) {
+    toast.error('Quantidade solicitada fora de estoque!');
+    return;
+  }
+  yield put(updateProductAmountFromCartSuccess(productId, amount));
+}
+
 export default all([
   takeLatest('@cart/ADD_REQUEST', addToCart),
+  takeLatest('@cart/UPDATE_AMOUNT_REQUEST', updateAmount),
 ]);
