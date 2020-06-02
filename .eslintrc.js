@@ -20,8 +20,12 @@ module.exports = {
   },
   plugins: [
     'react',
+    'react-hooks'
   ],
   rules: {
+    'react-hooks/rules-of-hooks': 'error',
+    'react-hooks/exhaustive-deps': 'warn',
+
     'import/prefer-default-export': 'off',
     'no-param-reassign': 'off',
     'jsx-a11y/control-has-associated-label': [2, {
